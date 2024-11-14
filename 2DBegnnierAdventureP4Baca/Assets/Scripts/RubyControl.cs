@@ -7,6 +7,9 @@ public class RubyControl : MonoBehaviour
     public float speed = 3.0f;
 
     public int maxHealth = 5;
+
+    public GameObject projectTilePrefab;
+
     public float timeInvicible = 2.0f;
     public int health { get { return currentHealth; } }
     int currentHealth;
@@ -55,6 +58,10 @@ public class RubyControl : MonoBehaviour
                 isInvincible = false;
             }
         }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
+        }
     }
     void FixedUpdate()
     { 
@@ -79,5 +86,15 @@ public class RubyControl : MonoBehaviour
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
+    }
+
+    void Launch()
+    {
+        GameObject projectTileObject = Instantiate(projectTilePrefab, rigidbody2d.position + Vector2.up * Vector2.up * 0.5f, Quaternion.identity);
+
+        ProjectTile projectTile = projectTileObject.GetComponent<ProjectTile>();
+        projectTile.Launch(lookDirection, 300);
+
+        animator.SetTrigger("Launch");
     }
 }
