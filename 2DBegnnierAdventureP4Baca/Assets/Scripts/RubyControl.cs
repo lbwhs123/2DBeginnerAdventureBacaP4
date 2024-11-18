@@ -47,8 +47,8 @@ public class RubyControl : MonoBehaviour
             lookDirection.Normalize();
         }
         animator.SetFloat("Look X", lookDirection.x);
-        animator.SetFloat("Look y", lookDirection.y);
-        animator.SetFloat("speed", move.magnitude);
+        animator.SetFloat("Look Y", lookDirection.y);
+        animator.SetFloat("Speed", move.magnitude);
 
         if (isInvincible)
         {
@@ -67,7 +67,7 @@ public class RubyControl : MonoBehaviour
     { 
         Vector2 position = rigidbody2d.position;
         position.x = position.x + speed * horizontal * Time.deltaTime; 
-        position.y = position.y + speed * vertical * Time.deltaTime; ;
+        position.y = position.y + speed * vertical * Time.deltaTime; 
 
         rigidbody2d.MovePosition(position);
     }
