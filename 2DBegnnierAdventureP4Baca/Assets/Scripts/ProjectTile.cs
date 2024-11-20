@@ -6,7 +6,7 @@ public class ProjectTile : MonoBehaviour
 {
     Rigidbody2D rigidbody2d;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
     }
@@ -14,7 +14,10 @@ public class ProjectTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(transform.position.magnitude > 1000.0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Launch(Vector2 direction, float force)
@@ -23,9 +26,14 @@ public class ProjectTile : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("PrjectTile Collision with " + other.gameObject); ;
+        EnemyControl e = other.collider.GetComponent<EnemyControl>();
+        if(e != null)
+        {
+            e.Fix();
+        }
+        
         Destroy(gameObject);
     }
 }
