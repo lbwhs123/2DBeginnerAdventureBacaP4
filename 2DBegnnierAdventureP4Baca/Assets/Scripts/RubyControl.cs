@@ -23,6 +23,7 @@ public class RubyControl : MonoBehaviour
 
     Animator animator;
     Vector2 lookDirection = new Vector2(1, 0);
+    private object hit2D;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +62,19 @@ public class RubyControl : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.C))
         {
             Launch();
+        }
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+            if(hit.collider !=null)
+            {
+                NonPlayerCharcters charcter = hit.collider.GetComponent<NonPlayerCharcters>(); 
+                if(charcter != null)
+                {
+                    charcter.DisplayDialog();
+                }
+            }
         }
     }
     void FixedUpdate()
