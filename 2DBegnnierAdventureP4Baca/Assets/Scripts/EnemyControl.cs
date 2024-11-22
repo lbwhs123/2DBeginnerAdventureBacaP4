@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class EnemyControl : MonoBehaviour
@@ -8,6 +5,8 @@ public class EnemyControl : MonoBehaviour
     public float speed = 3.0f;
     public bool vertical;
     public float changeTime = 3.0f;
+
+    public ParticleSystem smokeEffect;
 
     Rigidbody2D rigidbody2d;
 
@@ -29,12 +28,12 @@ public class EnemyControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!broken)
+        if (!broken)
         {
             return;
         }
         timer -= Time.deltaTime;
-        if(timer < 0)
+        if (timer < 0)
         {
             direction = -direction;
             timer = changeTime;
@@ -42,12 +41,12 @@ public class EnemyControl : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(!broken)
+        if (!broken)
         {
             return;
         }
         Vector2 position = rigidbody2d.position;
-        if(vertical)
+        if (vertical)
         {
             animator.SetFloat("MoveX", 0);
             animator.SetFloat("MoveY", direction);
@@ -60,7 +59,7 @@ public class EnemyControl : MonoBehaviour
             position.x = position.x + Time.deltaTime * speed * direction;
         }
 
-         rigidbody2d.MovePosition(position);
+        rigidbody2d.MovePosition(position);
     }
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -76,5 +75,6 @@ public class EnemyControl : MonoBehaviour
         broken = false;
         rigidbody2d.simulated = false;
         animator.SetTrigger("Fixed");
+        smokeEffect.Stop();
     }
 }
